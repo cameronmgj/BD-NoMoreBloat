@@ -5,9 +5,9 @@
  * @description test console.log
  *
  * @invite XXXXXXXXXX
- * @website https://github.com
- * @source https://github.com
- * @updateUrl https://raw.githubusercontent.com
+ * @website https://github.com/cameronmgj/bd-test-0
+ * @source https://github.com/cameronmgj/bd-test-0/test0.plugin.js
+ * @updateUrl https://github.com/cameronmgj/bd-test-0/test0.plugin.js
  */
 
 start() {
