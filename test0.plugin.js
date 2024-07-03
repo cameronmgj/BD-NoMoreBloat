@@ -1,7 +1,7 @@
 /**
- * @name TutorialPlugin2
- * @author YourName
- * @description Learning how to make BetterDiscord plugins!
+ * @name bd bloat hider
+ * @author cameronmgj
+ * @description hides unneccessary tabs on discord home page: shop, nitro, friends. customizable in settings.
  * @version 0.0.1
  */
 
