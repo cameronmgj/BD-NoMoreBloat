@@ -8,6 +8,7 @@
  module.exports = meta => {
 
     const mySettings = {friends: true, nitro: true, shop: true};
+	const nativeUI = BdApi.Webpack.getModule(m => m?.FormSwitch && m.FormItem);
 
     function buildSetting(text, key, type, value, callback = () => {}) {
         const setting = Object.assign(document.createElement("div"), {className: "setting"});
@@ -23,11 +24,10 @@
         setting.append(label, input);
         return setting;
     }
-
 	
 	function initObserver() {
         const observer = new MutationObserver((mutationsList) => {
-            for (const mutation of mutationsList) {
+            for (const mutation of mutationsList) {`
                 if (mutation.type === 'childList') {
                     // actions to take
                     run();
@@ -39,16 +39,20 @@
         observer.observe(targetNode, config);
 	};
 	
+	function ToggleSwitch(toggleSetting, label) {
+	    const [enabled, toggleSetting] = useState(true);
+	    return BdApi.React.createElement(nativeUI.FormSwitch, {value: toggleSetting, note: 'sub text', onChange: newValue => toggleSetting(newValue),}, label);
+	};
+	
 	//run when called
 	function run() {
-		console.log("running");
 		if (mySettings.friends) {
 			if (mySettings.nitro) {
 				if (mySettings.shop) {
 					/* console.log("--hiding-friends--");
 					console.log("--hiding-nitro--");
 					console.log("--hiding-shop--"); */
-					this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_d91ad9, .channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
+					this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
 					const DMsIndex = Array.from(this.shopElements).findIndex(element => element.classList.contains("privateChannelsHeaderContainer_c47fa9"));
 					if (DMsIndex > 0) {
 						this.shopElements[2].style.display = "none";
@@ -59,7 +63,7 @@
 				else {
 					/* console.log("--hiding-friends--");
 					console.log("--hiding-nitro--"); */
-					this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_d91ad9, .channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
+					this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
 					const DMsIndex = Array.from(this.shopElements).findIndex(element => element.classList.contains("privateChannelsHeaderContainer_c47fa9"));
 					if (DMsIndex > 1) {
 						this.shopElements[1].style.display = "none";
@@ -70,7 +74,7 @@
 			else if (mySettings.shop) {
 				/* console.log("--hiding-friends--");
 				console.log("--hiding-shop--"); */
-				this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_d91ad9, .channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
+				this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
 				const DMsIndex = Array.from(this.shopElements).findIndex(element => element.classList.contains("privateChannelsHeaderContainer_c47fa9"));
 				if (DMsIndex > 1) {
 					this.shopElements[2].style.display = "none";
@@ -79,7 +83,7 @@
 			}
 			else {
 				/* console.log("--hiding-friends--"); */
-				this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_d91ad9, .channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
+				this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
 				const DMsIndex = Array.from(this.shopElements).findIndex(element => element.classList.contains("privateChannelsHeaderContainer_c47fa9"));
 				if (DMsIndex > 2) {
 					this.shopElements[0].style.display = "none";
@@ -90,7 +94,7 @@
 			if (mySettings.shop) {
 				/* console.log("--hiding-nitro--");
 				console.log("--hiding-shop--"); */
-				this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_d91ad9, .channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
+				this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
 				const DMsIndex = Array.from(this.shopElements).findIndex(element => element.classList.contains("privateChannelsHeaderContainer_c47fa9"));
 				if (DMsIndex > 1) {
 					this.shopElements[2].style.display = "none";
@@ -99,7 +103,7 @@
 			}
 			else {
 				/* console.log("--hiding-nitro--"); */
-				this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_d91ad9, .channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
+				this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
 				const DMsIndex = Array.from(this.shopElements).findIndex(element => element.classList.contains("privateChannelsHeaderContainer_c47fa9"));
 				if (DMsIndex > 2) {
 					this.shopElements[2].style.display = "none";
@@ -108,7 +112,7 @@
 		}
 		else if (mySettings.shop) {
 			/* console.log("--hiding-shop--"); */
-			this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_d91ad9, .channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
+			this.shopElements = document.querySelectorAll('[role="listitem"].channel_c91bad.container_b15955, .privateChannelsHeaderContainer_c47fa9');
 			const DMsIndex = Array.from(this.shopElements).findIndex(element => element.classList.contains("privateChannelsHeaderContainer_c47fa9"));
 			if (DMsIndex > 2) {
 				this.shopElements[2].style.display = "none";
@@ -121,7 +125,6 @@
         Object.assign(mySettings, BdApi.Data.load(meta.name, "settings"));
 		run();
 		initObserver();
-		console.log("-------------------------NO MORE BLOAT---------------------------");
     },
     stop: () => {
     },
@@ -138,3 +141,4 @@
     }
   }
 };
+
